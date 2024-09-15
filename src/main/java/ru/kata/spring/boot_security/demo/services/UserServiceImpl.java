@@ -10,9 +10,9 @@ import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
@@ -37,27 +36,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user, List<Long> roles) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setFirstName(user.getFirstName());
-        user.setLastName(user.getLastName());
-        user.setEmail(user.getEmail());
-        user.setAge(user.getAge());
         List<Role> newRoles = roleRepository.findAllById(roles);
         user.setRoles(new HashSet<>(newRoles));
         userRepository.save(user);
     }
 
     @Override
-    public void editUser(Long id, String password, String firstName, String lastName, int age, String email, List<Role> roles) {
-        User user = userRepository.getById(id);
-        if (password != null && !password.isEmpty() && !password.equals(user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(password));
+    public void editUser(Long id, User user, Long[] selectedRoles) {
+        User existingUser = userRepository.getById(id);
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setAge(user.getAge());
+        existingUser.setEmail(user.getEmail());
+        if (user.getPassword() != null && !user.getPassword().isEmpty() && !user.getPassword().equals(existingUser.getPassword())) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setAge(age);
-        user.setEmail(email);
-        user.setRoles(new HashSet<>(roles));
-        userRepository.save(user);
+        if (selectedRoles != null) {
+            existingUser.setRoles(new HashSet<> (roleRepository.findAllById(Arrays.asList(selectedRoles))));
+        }
+        userRepository.save(existingUser);
     }
 
     @Override

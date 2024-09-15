@@ -3,17 +3,12 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
-
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -38,13 +33,7 @@ public class AdminController {
 
     @PostMapping("/edit/{id}")
     public String updateUser(@ModelAttribute("addUser") User user, @RequestParam(name = "selectedRoles", required = false) Long[] selectedRoles, @PathVariable("id") Long id) {
-        List<Role> roles = new ArrayList<>();
-        if (selectedRoles == null) {
-            userService.editUser(id, user.getPassword(), user.getFirstName(), user.getLastName(), user.getAge(), user.getEmail(), userService.showUser(id).getRoles().stream().collect(Collectors.toList()));
-        }else{
-            roles = roleService.findAllById(Arrays.asList(selectedRoles));
-            userService.editUser(id, user.getPassword(), user.getFirstName(), user.getLastName(), user.getAge(), user.getEmail(), roles);
-        }
+        userService.editUser(id, user, selectedRoles);
         return "redirect:/admin";
     }
 
@@ -56,11 +45,7 @@ public class AdminController {
 
     @PostMapping("/add")
     public String addUser(@ModelAttribute("user") User user, @RequestParam(name = "selectedRoles", required = false) Long[] selectedRoles) {
-        List<Long> roles = new ArrayList<>();
-        if (selectedRoles != null && selectedRoles.length > 0) {
-            roles = Arrays.asList(selectedRoles);
-        }
-        userService.addUser(user, roles);
+        userService.addUser(user, Arrays.asList(selectedRoles));
         return "redirect:/admin";
     }
 
