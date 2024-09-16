@@ -75,12 +75,12 @@
                                         </td>
                                         <td>
                                             <button th:id="'openEditModal' + ${user.getId()}" class="btn btn-sm btn-info text-white">Edit</button>
-                                            <dialog th:id="'editModal' + ${user.getId()}" style="width: 410px; padding: 0px; border-radius: 10px;">
+                                            <dialog th:id="'editModal' + ${user.getId()}" style="width: 410px; padding: 0px; border-radius: 10px; border: 1px solid #fff; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);">
                                                     <form method="dialog" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:method="POST" th:object="${user}" style="width: 400px">
                                                         <input type="hidden" name="id" th:value="${user.getId()}">
                                                         <div class="modal-header" style="border-top-left-radius: 10px; border-top-right-radius: 10px">
                                                             <h8 class="modal-title"><b>Edit user</b></h8>
-                                                            <button type="button" class="btn-close" aria-label="Close" th:onclick="'document.getElementById(\'editModal' + ${user.getId()} + '\').close();'"></button>
+                                                            <button type="button" class="btn-close" aria-label="Close" th:onclick="'document.getElementById(\'editModal' + ${user.getId()} + '\').close();'" style="background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\' fill=\'%23999\'%3e%3cpath d=\'M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z\'/%3e%3c/svg%3e'); background-color: transparent; background-repeat: no-repeat; background-size: 0.7em; border: none; box-shadow: none; outline: none; width: 0.7em; height: 0.7em;"></button>
                                                         </div>
                                                         <br/>
                                                         <div class="d-flex justify-content-center">
@@ -147,11 +147,11 @@
                                         </td>
                                         <td>
                                             <button th:id="'openDeleteModal' + ${user.getId()}" class="btn btn-sm btn-danger text-white">Delete</button>
-                                            <dialog th:id="'deleteModal' + ${user.getId()}" style="width: 410px; padding: 0px; border-radius: 10px;">
+                                            <dialog th:id="'deleteModal' + ${user.getId()}" style="width: 410px; padding: 0px; border-radius: 10px; border: 1px solid #fff; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);">
                                                 <form method="dialog" th:action="@{/admin/delete/{id}(id=${user.getId()})}" th:method="DELETE">
                                                     <div class="modal-header" style="border-top-left-radius: 10px; border-top-right-radius: 10px">
                                                         <h8 class="modal-title"><b>Delete user</b></h8>
-                                                        <button type="button" class="btn-close" aria-label="Close" th:onclick="'document.getElementById(\'deleteModal' + ${user.getId()} + '\').close();'"></button>
+                                                        <button type="button" class="btn-close" aria-label="Close" th:onclick="'document.getElementById(\'deleteModal' + ${user.getId()} + '\').close();'" style="background-image: url('data:image/svg+xml,%3csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 16 16\' fill=\'%23999\'%3e%3cpath d=\'M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z\'/%3e%3c/svg%3e'); background-color: transparent; background-repeat: no-repeat; background-size: 0.7em; border: none; box-shadow: none; outline: none; width: 0.7em; height: 0.7em;"></button>
                                                     </div>
                                                     <br/>
                                                     <div class="d-flex justify-content-center">
